@@ -1,0 +1,76 @@
+﻿@inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<MudThemeProvider Theme="_currentTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<MudLayout>
+  <MudAppBar Elevation="1">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudText Typo="Typo.h5" Class="ml-3">Legend Arena</MudText>
+    <MudSpacer />
+    <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Outlined.DarkMode" OnClick="@((e) => ToggleThemeAsync())">Toggle Dark/Light Mode</MudIconButton>
+  </MudAppBar>
+  <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+    <NavMenu />
+  </MudDrawer>
+  <MudMainContent>
+    @Body
+  </MudMainContent>
+</MudLayout>
+
+@code {
+
+  protected override async Task OnInitializedAsync()
+  {
+    var isDarkThemePreferred = await localStorage.GetItemAsync<bool>(LocalStorageKeys.IsDarkThemePreferred);
+    _currentTheme = isDarkThemePreferred ? _darkTheme : _defaultTheme;
+  }
+
+  private async Task ToggleThemeAsync()
+  {
+    var isSwitchingToDark = _currentTheme == _defaultTheme;
+    _currentTheme = isSwitchingToDark ? _darkTheme : _defaultTheme;
+    await localStorage.SetItemAsync(LocalStorageKeys.IsDarkThemePreferred, isSwitchingToDark);
+  }
+
+  private MudTheme _currentTheme = new MudTheme();
+  private MudTheme _defaultTheme = new MudTheme();
+
+  private MudTheme _darkTheme = new MudTheme()
+  {
+    Palette = new Palette()
+    {
+      Black = "#27272f",
+      Background = "#32333d",
+      BackgroundGrey = "#27272f",
+      Surface = "#373740",
+      DrawerBackground = "#27272f",
+      DrawerText = "rgba(255,255,255, 0.50)",
+      DrawerIcon = "rgba(255,255,255, 0.50)",
+      AppbarBackground = "#27272f",
+      AppbarText = "rgba(255,255,255, 0.70)",
+      TextPrimary = "rgba(255,255,255, 0.70)",
+      TextSecondary = "rgba(255,255,255, 0.50)",
+      ActionDefault = "#adadb1",
+      ActionDisabled = "rgba(255,255,255, 0.26)",
+      ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+      Divider = "rgba(255,255,255, 0.12)",
+      DividerLight = "rgba(255,255,255, 0.06)",
+      TableLines = "rgba(255,255,255, 0.12)",
+      LinesDefault = "rgba(255,255,255, 0.12)",
+      LinesInputs = "rgba(255,255,255, 0.3)",
+      TextDisabled = "rgba(255,255,255, 0.2)",
+      Primary = "rgba(255,255,255, 0.70)"
+    }
+  };
+
+  private bool _drawerOpen = false;
+
+  private void DrawerToggle()
+  {
+    _drawerOpen = !_drawerOpen;
+  }
+}
