@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
 using System.Linq;
 
 namespace LegendArenaBlazor.Server
@@ -25,6 +27,8 @@ namespace LegendArenaBlazor.Server
 
       services.AddControllersWithViews();
       services.AddRazorPages();
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +49,10 @@ namespace LegendArenaBlazor.Server
       app.UseHttpsRedirection();
       app.UseBlazorFrameworkFiles();
       app.UseStaticFiles();
+      app.UseAuthentication();
 
       app.UseRouting();
+      app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {

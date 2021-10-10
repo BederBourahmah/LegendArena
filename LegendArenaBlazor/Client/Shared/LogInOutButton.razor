@@ -1,0 +1,30 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject SignOutSessionStateManager SignOutSessionManager
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+  <Authorized>
+    @if (ShouldIncludeAvatar)
+    {
+      <MudAvatar Color="Color.Info" Variant="Variant.Outlined">@context.User?.Identity?.Name?.FirstOrDefault()</MudAvatar>
+    }
+    <MudIconButton Color="Color.Warning" Icon="@Icons.Material.Outlined.Logout" OnClick="@HandleLogoutAsync" />
+  </Authorized>
+  <NotAuthorized>
+    <MudIconButton Color="Color.Secondary" Icon="@Icons.Material.Outlined.Login" OnClick="@HandleLogin" />
+  </NotAuthorized>
+</AuthorizeView>
+
+@code {
+  [Parameter]
+  public bool ShouldIncludeAvatar { get; set; } = false;
+
+  private void HandleLogin(MouseEventArgs e)
+    => Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+
+  private async Task HandleLogoutAsync(MouseEventArgs e)
+  {
+    await SignOutSessionManager.SetSignOutState();
+    Navigation.NavigateTo($"authentication/logout?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+  }
+}
