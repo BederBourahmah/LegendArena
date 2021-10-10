@@ -11,7 +11,8 @@
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
     <MudText Typo="Typo.h5" Class="ml-3">Legend Arena</MudText>
     <MudSpacer />
-    <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Outlined.DarkMode" OnClick="@((e) => ToggleThemeAsync())">Toggle Dark/Light Mode</MudIconButton>
+    <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Outlined.DarkMode" OnClick="@((e) => ToggleThemeAsync())" />
+    <LogInOutButton ShouldIncludeAvatar="true" />
   </MudAppBar>
   <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
     <NavMenu />

@@ -1,0 +1,10 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+  <Authorized>
+    <MudText>Welcome to Legend Arena, @context.User.Identity.Name!</MudText>
+  </Authorized>
+  <NotAuthorized>
+    <MudText>Welcome to Legend Arena!</MudText>
+  </NotAuthorized>
+</AuthorizeView>
