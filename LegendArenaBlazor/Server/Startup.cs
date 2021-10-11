@@ -1,13 +1,13 @@
+using LegendArena.BusinessLogic;
+using LegendArena.DataAccess;
+using LegendArena.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
-using System.Linq;
 
 namespace LegendArenaBlazor.Server
 {
@@ -24,11 +24,16 @@ namespace LegendArenaBlazor.Server
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-
+      var connectionStrings = new ConnectionStringsConfiguration();
+      Configuration.Bind("ConnectionStrings", connectionStrings);
+      services.AddSingleton(connectionStrings);
       services.AddControllersWithViews();
       services.AddRazorPages();
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
+      services.AddScoped<LegendArenaSqlConnectionProvider>();
+      services.AddScoped<PlayerAccessor>();
+      services.AddScoped<PlayerProcessor>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
