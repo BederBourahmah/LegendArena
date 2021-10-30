@@ -1,8 +1,11 @@
 ﻿using Dapper;
+using LegendArena.Models.DatabaseModels;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using LegendArena.Models;
+using LegendArena.Models.Extensions;
 
 namespace LegendArena.DataAccess
 {
@@ -19,6 +22,12 @@ namespace LegendArena.DataAccess
       await _sqlConnection.ExecuteAsync(sql: "[dbo].[sp_CreatePlayer]",
                                         param: new { guid },
                                         commandType: CommandType.StoredProcedure);
+    }
+
+    public async Task<Player> GetPlayerByGuidAsync(Guid guid)
+    {
+      var sqlPlayer = await _sqlConnection.QueryFirstOrDefaultAsync<SqlPlayer>(sql: "[dbo].[sp_GetPlayerByGuid]", param: new { guid }, commandType: CommandType.StoredProcedure);
+      return sqlPlayer?.ToPlayer();
     }
   }
 }
