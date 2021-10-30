@@ -65,8 +65,10 @@
   <ItemGroup>
     <Build Include="Tables\dbo\Player.sql" />
     <Build Include="Programmability\dbo\sp_CreatePlayer.sql" />
+    <Build Include="Programmability\dbo\sp_GetPlayerByGuid.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SchemaCompares\ProjectToLocal.scmp" />
+    <None Include="SchemaCompares\ProjectToAzure.scmp" />
   </ItemGroup>
 </Project>

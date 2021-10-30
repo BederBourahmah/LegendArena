@@ -1,5 +1,20 @@
 ﻿@page "/"
+@using LegendArena.Blazor.HttpClients
+@using LegendArena.Models; 
+@inject PlayerHttpClient PlayerHttp
 
 <MudContainer>
   <WelcomeMessage />
+  <MudButton OnClick="callback">Test</MudButton>
+  <MudText>@(_player?.PlayerId)</MudText>
 </MudContainer>
+
+@code {
+  private Player _player;
+
+  private async Task callback(MouseEventArgs e)
+  {
+    var player = await PlayerHttp.GetOrCreatePlayerAsync();
+    _player = player;
+  }
+}
