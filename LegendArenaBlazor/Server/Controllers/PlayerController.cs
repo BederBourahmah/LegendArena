@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LegendArenaBlazor.Server.Controllers
@@ -34,6 +32,12 @@ namespace LegendArenaBlazor.Server.Controllers
       var guid = new Guid(guidAsString);
       var player = await _playerProcessor.GetOrCreatePlayerByGuidAsync(guid);
       return player;
+    }
+
+    [HttpGet("Exception")]
+    public void TestException()
+    {
+      throw new LegendArenaException("This is a custom legend arena exception!");
     }
   }
 }

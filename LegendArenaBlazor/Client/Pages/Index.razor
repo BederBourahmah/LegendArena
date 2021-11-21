@@ -5,16 +5,22 @@
 
 <MudContainer>
   <WelcomeMessage />
-  <MudButton OnClick="callback">Test</MudButton>
+  <MudButton OnClick="HandleGetOrCreatePlayerClick">Test Get or Create Player</MudButton>
+  <MudButton OnClick="HandleTestExceptionClick">Test Exception</MudButton>
   <MudText>@(_player?.PlayerId)</MudText>
 </MudContainer>
 
 @code {
   private Player _player;
 
-  private async Task callback(MouseEventArgs e)
+  private async Task HandleGetOrCreatePlayerClick(MouseEventArgs e)
   {
     var player = await PlayerHttp.GetOrCreatePlayerAsync();
     _player = player;
+  }
+
+  private async Task HandleTestExceptionClick(MouseEventArgs e)
+  {
+    await PlayerHttp.TestExceptionAsync();
   }
 }

@@ -1,6 +1,7 @@
 using LegendArena.BusinessLogic;
 using LegendArena.DataAccess;
 using LegendArena.Model;
+using LegendArena.WebApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,9 @@ namespace LegendArenaBlazor.Server
       var connectionStrings = new ConnectionStringsConfiguration();
       Configuration.Bind("ConnectionStrings", connectionStrings);
       services.AddSingleton(connectionStrings);
-      services.AddControllersWithViews();
+      services.AddControllersWithViews(options => {
+        options.Filters.Add<CustomExceptionFilter>();
+      });
       services.AddRazorPages();
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));

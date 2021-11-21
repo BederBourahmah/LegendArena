@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Shared\LegendArena.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-  </ItemGroup>
-
 </Project>
