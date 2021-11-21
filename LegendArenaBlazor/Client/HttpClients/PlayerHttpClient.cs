@@ -11,9 +11,9 @@ namespace LegendArena.Blazor.HttpClients
     public PlayerHttpClient(HttpClient http, ISnackbar snackbar, AuthenticationStateProvider authenticationStateProvider) : base(http, snackbar, authenticationStateProvider)
     { }
 
-    public async Task<Player> GetOrCreatePlayerAsync()
+    public async Task<Player> GetOrCreatePlayerAsync(bool shouldDisplaySnackbar = true)
     {
-      if (!await ValidateUserIsAuthenticatedAsync())
+      if (!await ValidateUserIsAuthenticatedAsync(shouldDisplaySnackbar: shouldDisplaySnackbar))
         return null;
 
       return await PostWithErrorSnackbarAsync<Player>("Player", null);
