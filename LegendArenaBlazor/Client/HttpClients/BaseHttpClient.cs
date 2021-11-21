@@ -2,9 +2,7 @@
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
-using LegendArena.Model;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using LegendArena.Models;
 using MudBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
 

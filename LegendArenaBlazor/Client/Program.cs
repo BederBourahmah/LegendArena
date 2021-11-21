@@ -8,6 +8,7 @@ using Blazored.LocalStorage;
 using LegendArena.Blazor.HttpClients;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Blazored.SessionStorage;
+using LegendArena.Blazor.StateContainers;
 
 namespace LegendArena.Blazor
 {
@@ -38,6 +39,7 @@ namespace LegendArena.Blazor
       builder.Services.AddBlazoredSessionStorage();
       builder.Services.AddOptions();
       builder.Services.AddAuthorizationCore();
+      builder.Services.AddSingleton<PlayerStateContainer>();
 
       await builder.Build().RunAsync();
     }

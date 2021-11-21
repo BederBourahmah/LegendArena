@@ -1,26 +1,20 @@
 ﻿@page "/"
+@using LegendArena.Blazor.StateContainers
 @using LegendArena.Blazor.HttpClients
-@using LegendArena.Models; 
-@inject PlayerHttpClient PlayerHttp
+@using LegendArena.Models;
+@inject PlayerStateContainer PlayerStateContainer
+@inject PlayerHttpClient PlayerHttpClient
 
 <MudContainer>
   <WelcomeMessage />
-  <MudButton OnClick="HandleGetOrCreatePlayerClick">Test Get or Create Player</MudButton>
-  <MudButton OnClick="HandleTestExceptionClick">Test Exception</MudButton>
   <MudText>@(_player?.PlayerId)</MudText>
 </MudContainer>
 
 @code {
   private Player _player;
 
-  private async Task HandleGetOrCreatePlayerClick(MouseEventArgs e)
+  protected override async Task OnInitializedAsync()
   {
-    var player = await PlayerHttp.GetOrCreatePlayerAsync();
-    _player = player;
-  }
-
-  private async Task HandleTestExceptionClick(MouseEventArgs e)
-  {
-    await PlayerHttp.TestExceptionAsync();
+    _player = await PlayerStateContainer.GetPlayerAsync(PlayerHttpClient);
   }
 }
