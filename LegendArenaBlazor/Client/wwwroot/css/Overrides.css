@@ -1,0 +1,5 @@
+﻿.mud-snackbar-content-message {
+    word-break: break-all;
+    max-height: 50vh;
+    overflow: auto;
+}
