@@ -66,6 +66,7 @@
     <Build Include="Tables\dbo\Player.sql" />
     <Build Include="Programmability\dbo\sp_CreatePlayer.sql" />
     <Build Include="Programmability\dbo\sp_GetPlayerByGuid.sql" />
+    <Build Include="Tables\dbo\Champion.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SchemaCompares\ProjectToLocal.scmp" />
