@@ -4,17 +4,34 @@
 @using LegendArena.Models;
 @inject PlayerStateContainer PlayerStateContainer
 @inject PlayerHttpClient PlayerHttpClient
+@inject ChampionHttpClient ChampionHttpClient
 
 <MudContainer>
   <WelcomeMessage />
-  <MudText>@(_player?.PlayerId)</MudText>
+  <Loading IsLoading="_isLoading">
+    <MudText>@(_player?.PlayerId)</MudText>
+    @if (_champions.Any())
+    {
+      <MudText>Champions Found</MudText>
+    }
+    else
+    {
+      <MudText>No Champions Found</MudText>
+    }
+  </Loading>
 </MudContainer>
 
 @code {
   private Player _player;
+  private Champion[] _champions = Array.Empty<Champion>();
+  private bool _isLoading = true;
 
   protected override async Task OnInitializedAsync()
   {
-    _player = await PlayerStateContainer.GetPlayerAsync(PlayerHttpClient);
+    var playerTask = PlayerStateContainer.GetPlayerAsync(PlayerHttpClient);
+    var championsTask = ChampionHttpClient.GetChampionsAsync(false);
+    _player = await playerTask;
+    _champions = await championsTask;
+    _isLoading = false;
   }
 }

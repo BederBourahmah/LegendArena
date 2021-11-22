@@ -16,7 +16,7 @@ namespace LegendArena.Blazor.HttpClients
       if (!await ValidateUserIsAuthenticatedAsync(shouldDisplaySnackbar: shouldDisplaySnackbar))
         return null;
 
-      return await PostWithErrorSnackbarAsync<Player>("Player", null);
+      return await PostWithErrorSnackbarAsync<Player>(string.Empty, null);
     }
 
     public async Task TestExceptionAsync()
@@ -24,7 +24,7 @@ namespace LegendArena.Blazor.HttpClients
       if (!await ValidateUserIsAuthenticatedAsync())
         return;
 
-      await GetWithErrorSnackbarAsync("Player/Exception");
+      await GetWithErrorSnackbarAsync("Exception");
     }
   }
 }
