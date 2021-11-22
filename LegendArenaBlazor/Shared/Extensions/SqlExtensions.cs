@@ -8,5 +8,10 @@ namespace LegendArena.Models.Extensions
     {
       return new(playerId: sqlPlayer.PlayerId, guid: sqlPlayer.Guid);
     }
+
+    public static Champion ToChampion(this SqlChampion sqlChampion)
+    {
+      return new(playerId: sqlChampion.PlayerId, name: sqlChampion.Name, championId: sqlChampion.ChampionId);
+    }
   }
 }

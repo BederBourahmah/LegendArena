@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[sp_GetPlayerByGuid]
+﻿CREATE PROCEDURE [dbo].[GetPlayerByGuid]
 	@guid UNIQUEIDENTIFIER
 AS
 BEGIN
