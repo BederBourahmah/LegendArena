@@ -36,6 +36,7 @@ namespace LegendArenaBlazor.Server
         .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
       services.AddScoped<LegendArenaSqlConnectionProvider>();
       services.AddScoped<PlayerAccessor>();
+      services.AddScoped<ChampionAccessor>();
       services.AddScoped<PlayerProcessor>();
     }
 

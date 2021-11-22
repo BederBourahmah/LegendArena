@@ -19,14 +19,14 @@ namespace LegendArena.DataAccess
 
     public async Task CreatePlayerAsync(Guid guid)
     {
-      await _sqlConnection.ExecuteAsync(sql: "[dbo].[sp_CreatePlayer]",
+      await _sqlConnection.ExecuteAsync(sql: "[dbo].[CreatePlayer]",
                                         param: new { guid },
                                         commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Player> GetPlayerByGuidAsync(Guid guid)
     {
-      var sqlPlayer = await _sqlConnection.QueryFirstOrDefaultAsync<SqlPlayer>(sql: "[dbo].[sp_GetPlayerByGuid]", param: new { guid }, commandType: CommandType.StoredProcedure);
+      var sqlPlayer = await _sqlConnection.QueryFirstOrDefaultAsync<SqlPlayer>(sql: "[dbo].[GetPlayerByGuid]", param: new { guid }, commandType: CommandType.StoredProcedure);
       return sqlPlayer?.ToPlayer();
     }
   }
