@@ -10,12 +10,9 @@
 <AuthorizeView>
   <Authorized>
     <Loading IsLoading="PlayerStateContainer.IsLoadingChampions">
-      @if (PlayerStateContainer.Champions.Any())
+      @foreach (var champion in PlayerStateContainer.Champions)
       {
-        @foreach (var champion in PlayerStateContainer.Champions)
-        {
-          <MudText>@champion.Name</MudText>
-        }
+        <MudText>@champion.Name</MudText>
       }
       <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true">Create New Champion</MudButton>
     </Loading>
