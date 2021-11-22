@@ -1,0 +1,36 @@
+﻿@using LegendArena.Blazor.StateContainers
+@using LegendArena.Blazor.HttpClients
+
+@implements IDisposable
+
+@inject PlayerStateContainer PlayerStateContainer
+@inject ChampionHttpClient ChampionHttpClient
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+  <Authorized>
+    <Loading IsLoading="PlayerStateContainer.IsLoadingChampions">
+      @if (PlayerStateContainer.Champions.Any())
+      {
+        @foreach (var champion in PlayerStateContainer.Champions)
+        {
+          <MudText>@champion.Name</MudText>
+        }
+      }
+      <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true">Create New Champion</MudButton>
+    </Loading>
+  </Authorized>
+</AuthorizeView>
+
+@code {
+  protected override async Task OnInitializedAsync()
+  {
+    PlayerStateContainer.OnChange += StateHasChanged;
+    await PlayerStateContainer.LoadChampionsAsync(ChampionHttpClient);
+  }
+
+  public void Dispose()
+  {
+    PlayerStateContainer.OnChange -= StateHasChanged;
+  }
+}
