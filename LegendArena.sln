@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegendArena.BusinessLogic",
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LegendArena.Sql", "LegendArena.Sql\LegendArena.Sql.sqlproj", "{8EE3453A-C06F-42EA-B62B-0FDBCFD829BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegendArena.DataAccess", "LegendArena.DataAccess\LegendArena.DataAccess.csproj", "{6BD1939A-1050-4C67-81CB-FF9A1FA5F68A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegendArena.DataAccess", "LegendArena.DataAccess\LegendArena.DataAccess.csproj", "{6BD1939A-1050-4C67-81CB-FF9A1FA5F68A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

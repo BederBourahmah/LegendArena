@@ -1,20 +1,6 @@
 ﻿@page "/"
-@using LegendArena.Blazor.StateContainers
-@using LegendArena.Blazor.HttpClients
-@using LegendArena.Models;
-@inject PlayerStateContainer PlayerStateContainer
-@inject PlayerHttpClient PlayerHttpClient
 
 <MudContainer>
   <WelcomeMessage />
-  <MudText>@(_player?.PlayerId)</MudText>
+  <ChampionsSelector />
 </MudContainer>
-
-@code {
-  private Player _player;
-
-  protected override async Task OnInitializedAsync()
-  {
-    _player = await PlayerStateContainer.GetPlayerAsync(PlayerHttpClient);
-  }
-}

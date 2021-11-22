@@ -23,7 +23,10 @@ namespace LegendArena.Blazor
         .AddHttpClient<WeatherForecastHttpClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
         .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
       builder.Services
-        .AddHttpClient<PlayerHttpClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+        .AddHttpClient<PlayerHttpClient>(client => client.BaseAddress = new Uri($"{builder.HostEnvironment.BaseAddress}Player"))
+        .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+      builder.Services
+        .AddHttpClient<ChampionHttpClient>(client => client.BaseAddress = new Uri($"{builder.HostEnvironment.BaseAddress}Champion"))
         .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
       builder.Services.AddMsalAuthentication(options =>

@@ -35,11 +35,11 @@ namespace LegendArena.Blazor.HttpClients
       return true;
     }
 
-    protected async Task<T> PostWithErrorSnackbarAsync<T>(string requestUri, HttpContent content)
+    protected async Task<T> PostWithErrorSnackbarAsync<T>(string requestRoute, HttpContent content)
     {
       try
       {
-        var response = await _http.PostAsync(requestUri, content);
+        var response = await _http.PostAsync(requestRoute, content);
         var responseContent = await response.Content.ReadFromJsonAsync<T>();
         return responseContent;
       }
@@ -60,11 +60,34 @@ namespace LegendArena.Blazor.HttpClients
       }
     }
 
-    protected async Task<T> GetWithErrorSnackbarAsync<T>(string requestUri)
+    protected async Task<T> GetFromJsonWithErrorSnackbarAsync<T>(string requestRoute)
     {
       try
       {
-        var response = await _http.GetAsync(requestUri);
+        return await _http.GetFromJsonAsync<T>($"{_http.BaseAddress}/{requestRoute}");
+      }
+      catch (AccessTokenNotAvailableException exception)
+      {
+        exception.Redirect();
+        return default;
+      }
+      catch (Exception exception)
+      {
+        _snackbar.Add(exception.Message, Severity.Error, config =>
+        {
+          config.RequireInteraction = true;
+          config.SnackbarVariant = Variant.Filled;
+        });
+
+        return default;
+      }
+    }
+
+    protected async Task<T> GetWithErrorSnackbarAsync<T>(string requestRoute)
+    {
+      try
+      {
+        var response = await _http.GetAsync($"{_http.BaseAddress}/{requestRoute}");
         if (!response.IsSuccessStatusCode)
         {
           var errorMessage = await response.Content.ReadAsStringAsync();
@@ -91,11 +114,11 @@ namespace LegendArena.Blazor.HttpClients
       }
     }
 
-    protected async Task GetWithErrorSnackbarAsync(string requestUri)
+    protected async Task GetWithErrorSnackbarAsync(string requestRoute)
     {
       try
       {
-        var response = await _http.GetAsync(requestUri);
+        var response = await _http.GetAsync(requestRoute);
         if (!response.IsSuccessStatusCode)
         {
           var errorMessage = await response.Content.ReadAsStringAsync();
